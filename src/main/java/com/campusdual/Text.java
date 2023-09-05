@@ -1,5 +1,6 @@
 package com.campusdual;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Text extends Post{
@@ -20,8 +21,13 @@ public class Text extends Post{
 
     @Override
     public String showPost() {
+        String strdate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        strdate = sdf.format(super.getDate().getTime());
+
         return "Text{" +
                 "content='" + content + '\'' +
+                "date='" + strdate + '\'' +
                 '}';
     }
 }

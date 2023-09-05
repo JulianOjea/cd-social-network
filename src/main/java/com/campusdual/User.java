@@ -1,12 +1,11 @@
 package com.campusdual;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class User {
     private String name;
-    private List<User> followedUsers;
-    private List<Post> posts;
+    private List<User> followedUsers = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     /*
     public User(String name, List<User> followedUsers, List<Post> posts) {
@@ -103,4 +102,34 @@ public class User {
             System.out.println(post.showPost() + "\n");
         }
     }
+
+    public Post getPostById(int id){
+        for (Post p:
+                posts) {
+            if (p.getId() == id){
+                return p;
+            }
+        }
+        return null;
+    }
+
+     public void generateWall(){
+        List<Post> postList = new ArrayList<>();
+         for (User u:
+              followedUsers) {
+             postList.addAll(u.posts);
+         }
+         Collections.sort(postList, new Comparator<Post>(){
+             public int compare(Post p1, Post p2){
+                return p1.getDate().compareTo(p2.getDate());
+             }
+         });
+
+         for (int i = 0; i < postList.size(); i++) {
+             System.out.println(postList.get(i).showPost());
+             if (i>10){
+                 break;
+             }
+         }
+     }
 }

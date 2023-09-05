@@ -1,5 +1,6 @@
 package com.campusdual;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Video extends Post{
@@ -41,8 +42,13 @@ public class Video extends Post{
 
     @Override
     public String showPost() {
+        String strdate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        strdate = sdf.format(super.getDate().getTime());
+
         return "Video{" +
                 "title='" + title + '\'' +
+                "date='" + strdate + '\'' +
                 ", quality='" + quality + '\'' +
                 ", duration=" + duration +
                 '}';

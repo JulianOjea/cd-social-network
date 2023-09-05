@@ -1,16 +1,16 @@
 package com.campusdual;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SocialNetwork {
-    private List<User> userList;
+    private List<User> userList = new ArrayList<>();
 
     public SocialNetwork(List<User> userList) {
         this.userList = userList;
     }
 
     public SocialNetwork(){
-
     }
 
     public List<User> getUserList() {

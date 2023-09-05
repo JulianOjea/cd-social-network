@@ -1,12 +1,13 @@
 package com.campusdual;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public abstract class Post {
 
     private Calendar date;
-    private List<Comment> commentList;
+    private List<Comment> commentList = new ArrayList<>();
     private int id;
 
     public int getId() {
@@ -23,6 +24,7 @@ public abstract class Post {
     }*/
 
     public Post(int id, Calendar date) {
+        this.id = id;
         this.date = date;
     }
 
@@ -40,6 +42,16 @@ public abstract class Post {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    public Comment findCommentById(int id){
+        for (Comment c:
+             commentList) {
+            if (c.getId() == id){
+                return c;
+            }
+        }
+        return null;
     }
 
     //--------------features

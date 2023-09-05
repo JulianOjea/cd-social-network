@@ -5,13 +5,13 @@ import com.campusdual.util.Input;
 import java.util.Calendar;
 
 public class Main {
-    public static void main(String[] args) {
+
+    public static SocialNetwork generateData() throws Exception {
+        SocialNetwork sN = new SocialNetwork();
 
         User u0 = new User("Adam");
         User u1 = new User("Betty");
         User u2 = new User("Carl");
-
-        SocialNetwork sN = new SocialNetwork();
 
         sN.addUser(u0);
         sN.addUser(u1);
@@ -54,29 +54,137 @@ public class Main {
         p0.addComment(c1);
         p1.addComment(c2);
 
-        while(true){
-            System.out.println("1 - Listar todos los posts de un usuario\n" +
-                    "2 - Listar los comentarios de un usuario\n" +
-                    "3 - Mostrar el número de comentarios que tiene un post\n" +
+        u0.follow(u1);
+        u0.follow(u2);
+
+        return  sN;
+    };
+
+    public static User inputUser(){
+        return new User(Input.string("Nombre: "));
+    }
+
+    public static Post inputPost(){
+
+        switch (Input.string("¿Qué tipo de post quiere añadir?")){
+            case "Imagen":
+                return new Image(
+                        Input.integer("Id del Post: "),
+                        Calendar.getInstance(),
+                        Input.string("Titulo: "),
+                        120,
+                        200
+                        );
+            case "Video": return new Video(
+                    Input.integer("Id del Post: "),
+                    Calendar.getInstance(),
+                    Input.string("Titulo: "),
+                    "HD",
+                    120);
+            case "Texto": return new Text(
+                    Input.integer("Id del Post: "),
+                    Calendar.getInstance(),
+                    Input.string("Contenido: ")
+            );
+            default:
+                return null;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        SocialNetwork sN = generateData();
+
+        boolean flag = true;
+        while(flag){
+            System.out.println(
+                    "1 - Añadir usuario\n" +
+                    "2 - Añadir post\n" +
+                    "3 - Añadir comentario\n" +
+                    "4 - Seguir a un usuario\n" +
+                    "5 - Dejar de seguir a un usuario\n" +
+                    "6 - Eliminar usuario\n" +
+                    "7 - Eliminar post\n" +
+                    "8 - Eliminar comentario\n" +
+                    "9 - Listar todos los posts de un usuario\n" +
+                    "10 - Listar los comentarios de un usuario\n" +
+                    "11 - Mostrar el número de comentarios que tiene un post\n" +
+                    "12 - Mostrar el muro de un usuario\n" +
                     "0 - Salir");
 
-            int input = Input.integer();
+
+            int inputInteger = Input.integer("Seleccione de la lista . . . ");
+
             String name;
             User user;
+            Post post;
 
-            switch (input){
+            switch (inputInteger){
                 case 1:
+                    user = new User(Input.string("Nombre: "));
+                    sN.addUser(user);
+                    break;
+                case 2:
+                    user = sN.getUserByName(Input.string("Nombre del usuario que postea: "));
+                    post = inputPost();
+                    user.addPost(post);
+                    break;
+                case 3:
+                    User owner = sN.getUserByName(Input.string("Nombre del usuario que comenta: "));
+                    user = sN.getUserByName(Input.string("Nombre del usuario sobre el que se comenta: "));
+                    post = user.getPostById(Input.integer("Id del post sobre el que se comenta: "));
+                    String content = Input.string("Comentario: ");
+                    post.addComment(new Comment(content, Calendar.getInstance(), owner));
+                    break;
+                case 4:
+                    user = sN.getUserByName(Input.string("Nombre del usuario que quiere hacer follow: "));
+                    user.follow(sN.getUserByName(Input.string("Nombre del usuario a seguir: ")));
+                    break;
+                case 5:
+                    user = sN.getUserByName(Input.string("Nombre del usuario que quiere hacer unfollow: "));
+                    user.unFollow(sN.getUserByName(Input.string("Nombre del usuario a dejar de seguir: ")));
+                    break;
+                case 6:
+                    user = sN.getUserByName(Input.string("Nombre del usuario a eliminar: "));
+                    sN.deleteUser(user);
+                    break;
+                case 7:
+                    user = sN.getUserByName(Input.string("Nombre del usuario del que se quiere eliminar un post: "));
+                    user.deletePost(user.getPostById(Input.integer("Id del post a eliminar: ")));
+                    break;
+                //TODO aqui hay dos maneras de eliminar un comentario, podria eliminarlo el usuario que lo contiene o
+                //TODO usuario que lo ha posteado, solo se implementa eliminacion sobre el que lo contiene
+                case 8:
+                    user = sN.getUserByName(Input.string("Nombre del usuario del que se quiere eliminar un comentario: "));
+                    post = user.getPostById(Input.integer("Id del post del que se quiere eliminar un comentario: "));
+                    post.deleteComment(post.findCommentById(Input.integer("Id del comentario que se quiere eliminar: ")));
+                    break;
+                case 9:
+                    System.out.println("Post de un usuario:");
                     name = Input.string();
                     user = sN.getUserByName(name);
                     user.showPosts();
                     break;
-                case 2:
+                case 10:
+                    System.out.println("Comentarios de un usuario:");
                     name = Input.string();
                     user = sN.getUserByName(name);
                     sN.showCommentsByUser(user);
                     break;
-                case 3:
+                case 11:
+                    System.out.println("Comentarios de un post:");
+                    name = Input.string("Seleccione un usuario . . .");
+                    user = sN.getUserByName(name);
+                    post = user.getPostById( Input.integer("Seleccione un post . . .") );
+                    System.out.println("Número de comentarios " + post.getNumberOfComments());
                     break;
+                case 12:
+                    user = sN.getUserByName(Input.string("Nombre del usuario para visualizar su muro: "));
+                    user.generateWall();
+                    break;
+                case 0:
+                    System.out.println("Saliendo . . . ");
+                    flag = false;
             }
 
         }
