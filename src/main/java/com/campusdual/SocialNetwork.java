@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class SocialNetwork {
     private List<User> userList = new ArrayList<>();
+    //TODO interaccion de consola deberia ser más pulida
 
     public SocialNetwork(List<User> userList) {
         this.userList = userList;
