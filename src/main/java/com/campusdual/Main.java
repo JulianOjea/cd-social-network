@@ -282,7 +282,8 @@ public class Main {
                     break;
                 case 13:
                     user = sN.getUserByName(Input.string("Nombre del usuario para obtener sus sugerencias de amigos: "));
-                    sN.suggestFriends(user);
+                    //sN.suggestFriends(user);
+                    sN.suggest(user);
                     break;
                 case 0:
                     System.out.println("Saliendo . . . ");

@@ -1,7 +1,9 @@
 package com.campusdual;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SocialNetwork {
     private List<User> userList = new ArrayList<>();
@@ -79,4 +81,43 @@ public class SocialNetwork {
         }
     }
 
+    public void suggest(User actualUser){
+        List<User> posibleSuggestions = new ArrayList<>();
+        List<User> suggestions = new ArrayList<>();
+        for (User user:
+             actualUser.getFriends()) {
+            if(user != null) {
+                for (User posibleFriend :
+                        user.getFriends()) {
+                    if (!posibleSuggestions.contains(posibleFriend)) {
+                        posibleSuggestions.add(posibleFriend);
+                    } else {
+                        suggestions.add(posibleFriend);
+                    }
+                }
+            }
+        }
+
+        Map<User, Integer> suggestionsMap = new HashMap<>();
+
+
+        for (User suggestion : suggestions) {
+            if (suggestion!=null){
+                if(suggestionsMap.containsKey(suggestion)){
+                    suggestionsMap.put(suggestion, suggestionsMap.get(suggestion) + 1);
+                }else{
+                    suggestionsMap.put(suggestion, 1);
+                }
+            }
+        }
+
+        System.out.println("Sugerencias de amigos: ");
+        for (Map.Entry<User, Integer> entry : suggestionsMap.entrySet()){
+            if (!entry.getKey().equals(actualUser)){
+                if(entry.getValue() > 1){
+                    System.out.println("User: " + entry.getKey().getName() + ", Ocurrencias" + entry.getValue());
+                };
+            }
+        }
+    }
 }
