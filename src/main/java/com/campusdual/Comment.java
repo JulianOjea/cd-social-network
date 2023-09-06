@@ -1,5 +1,6 @@
 package com.campusdual;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class Comment {
@@ -7,7 +8,7 @@ public class Comment {
     //A modo de ejemplo se generan ids de comentario a partir de este valor
     public static int idComment = 0;
     private String text;
-    private Calendar date;
+    private LocalDate date;
     private User owner;
 
     public static int getIdComment() {
@@ -28,7 +29,7 @@ public class Comment {
 
     private int id;
 
-    public Comment(String text, Calendar date, User owner) {
+    public Comment(String text, LocalDate date, User owner) {
         this.text = text;
         this.date = date;
         this.owner = owner;
@@ -44,11 +45,11 @@ public class Comment {
         this.text = text;
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

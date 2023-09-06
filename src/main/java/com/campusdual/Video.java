@@ -1,6 +1,8 @@
 package com.campusdual;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class Video extends Post{
@@ -9,7 +11,7 @@ public class Video extends Post{
     String quality;
     int duration;
 
-    public Video(int id, Calendar date, String title, String quality, int duration) {
+    public Video(int id, LocalDate date, String title, String quality, int duration) {
         super(id, date);
         this.title = title;
         this.quality = quality;
@@ -42,9 +44,8 @@ public class Video extends Post{
 
     @Override
     public String showPost() {
-        String strdate = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        strdate = sdf.format(super.getDate().getTime());
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+        String strdate = super.getDate().format(formatters);
 
         return "Video{" +
                 "title='" + title + '\'' +

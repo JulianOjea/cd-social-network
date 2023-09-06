@@ -1,12 +1,14 @@
 package com.campusdual;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class Text extends Post{
     private String content;
 
-    public Text(int id, Calendar date, String content) {
+    public Text(int id, LocalDate date, String content) {
         super(id, date);
         this.content = content;
     }
@@ -21,9 +23,8 @@ public class Text extends Post{
 
     @Override
     public String showPost() {
-        String strdate = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        strdate = sdf.format(super.getDate().getTime());
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+        String strdate = super.getDate().format(formatters);
 
         return "Text{" +
                 "content='" + content + '\'' +

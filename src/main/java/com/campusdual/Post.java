@@ -1,12 +1,13 @@
 package com.campusdual;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public abstract class Post {
 
-    private Calendar date;
+    private LocalDate date;
     private List<Comment> commentList = new ArrayList<>();
     private int id;
 
@@ -23,16 +24,16 @@ public abstract class Post {
         this.commentList = commentList;
     }*/
 
-    public Post(int id, Calendar date) {
+    public Post(int id, LocalDate date) {
         this.id = id;
         this.date = date;
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

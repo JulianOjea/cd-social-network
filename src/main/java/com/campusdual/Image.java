@@ -1,6 +1,8 @@
 package com.campusdual;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class Image extends Post{
@@ -9,7 +11,7 @@ public class Image extends Post{
     private int height;
     private int width;
 
-    public Image(int id, Calendar date, String title, int height, int width) {
+    public Image(int id, LocalDate date, String title, int height, int width) {
         super(id, date);
         this.title = title;
         this.height = height;
@@ -42,9 +44,8 @@ public class Image extends Post{
 
     @Override
     public String showPost() {
-        String strdate = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        strdate = sdf.format(super.getDate().getTime());
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+        String strdate = super.getDate().format(formatters);
 
         return "Image{" +
                 "title='" + title + '\'' +

@@ -7,6 +7,8 @@ public class User {
     private List<User> followedUsers = new ArrayList<>();
     private List<Post> posts = new ArrayList<>();
 
+    private List<User> friends = new ArrayList<>();
+
     /*
     public User(String name, List<User> followedUsers, List<Post> posts) {
         this.name = name;
@@ -42,19 +44,6 @@ public class User {
         this.posts = posts;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getName(), user.getName()) && Objects.equals(getFollowedUsers(), user.getFollowedUsers()) && Objects.equals(getPosts(), user.getPosts());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getFollowedUsers(), getPosts());
-    }
-
     //--------------features
     public void addPost(Post post){
         this.posts.add(post);
@@ -71,9 +60,9 @@ public class User {
 
         if (flag){
             this.followedUsers.add(user);
-        } else {
+        } /*else {
             throw new Exception("This user was already followed");
-        }
+        }*/
     }
 
     public void unFollow(User user) throws Exception {
@@ -127,9 +116,65 @@ public class User {
 
          for (int i = 0; i < postList.size(); i++) {
              System.out.println(postList.get(i).showPost());
-             if (i>10){
+             if (i>11){
                  break;
              }
          }
      }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
+    }
+
+    public void addFriend(User user) {
+        this.friends.add(user);
+    }
+
+    /*
+    public void suggestFriends() {
+        List<User> suggestions = new ArrayList<>();
+        System.out.println("me entras no?");
+
+        for (User friendUser : this.friends) {
+            // Evitar sugerir al propio usuario ni a sus amigos actuales
+            if (friendUser != this && !this.getFriends().contains(friendUser)) {
+                // Calcular la cantidad de amigos en común
+                int commonFriends = 0;
+                List<User> friendsOfFriend = friendUser.getFriends();
+                for (User amigo : this.getFriends()) {
+                    if (friendsOfFriend.contains(amigo)) {
+                        commonFriends++;
+                    }
+                }
+
+                // Si tienen al menos un amigo en común, agregarlo a las sugerencias
+                System.out.println("hola prim " + commonFriends);
+                if (commonFriends > 0) {
+                    suggestions.add(friendUser);
+                }
+            }
+        }
+
+        for (User u:
+             suggestions) {
+            System.out.println(u.getName());
+        }
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(getName(), user.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
+    }
 }
